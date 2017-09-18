@@ -9,11 +9,6 @@
 还没制作npm包
 ```
 
-## v-model 双向绑定
-```vue
-<address-picker v-model="location" :level="3" :type='["unit","address"]' @on-change="getChangeValue" ></address-picker>
-```
-
 ```js
 data: function() {
       return {
@@ -59,7 +54,7 @@ methods:{
 	目前只支持 两个类型库，需要的话，自己在源码里面增加以适应不同的场合
 	如果空数组则default : address
 ```
-- value {Object}(也可以使用v-model进行双向绑定)
+- value {Object}(双向绑定)
 支持value 传入默认值
 ```vue
 	<address-picker :value="location" :level="3" :type='["unit","address"]' @on-change="getChangeValue" ></address-picker>

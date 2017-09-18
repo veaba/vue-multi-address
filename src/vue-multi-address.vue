@@ -8,68 +8,68 @@
 * type  {array} props 传入数组、默认 address ，支持额外的库，如unit，库由开发者额外提供
 -->
 <style scoped lang="scss">
-  .address-picker {
-    &:after {
-      display: block;
-      content: '';
-      width: 0;
-      height: 0;
-      clear: both;
+    .address-picker {
+        &:after {
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+            clear: both;
+        }
     }
-  }
 </style>
 
 <template>
-  <div class='address-picker'>
+    <div class='address-picker'>
 
-    <!--省份-->
-    <div class="ivu-select ivu-select-single" :class="{'ivu-select-visible':selectProvinceStatus}" @click.stop="openSelectProvince" v-clickoutside="handleProvinceClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
-      <div class="ivu-select-selection">
-        <span class="ivu-select-placeholder" v-show="!province">请选择</span>
-        <span class="ivu-select-selected-value" v-show="province">{{province}}</span>
-        <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
-        <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
-      </div>
-      <div class="ivu-select-dropdown" v-show="selectProvinceStatus" :style="styles">
-        <ul class="ivu-select-dropdown-list">
-          <li v-for="item in lib" class="ivu-select-item" :class="{'ivu-select-item-selected':province==item.name}" @click="selectProvince(item.name)">{{item.name}}
-          </li>
-        </ul>
-      </div>
-    </div>
+        <!--省份-->
+        <div class="ivu-select ivu-select-single" :class="{'ivu-select-visible':selectProvinceStatus}" @click.stop="openSelectProvince" v-clickoutside="handleProvinceClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
+            <div class="ivu-select-selection">
+                <span class="ivu-select-placeholder" v-show="!value.province">请选择</span>
+                <span class="ivu-select-selected-value" v-show="value.province">{{value.province}}</span>
+                <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
+                <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
+            </div>
+            <div class="ivu-select-dropdown" v-show="selectProvinceStatus" :style="styles">
+                <ul class="ivu-select-dropdown-list">
+                    <li v-for="item in lib" class="ivu-select-item" :class="{'ivu-select-item-selected':value.province==item.name}" @click="selectProvince(item.name)">{{item.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    <!--市级-->
-    <div class="ivu-select ivu-select-single" v-if="level>1" :class="{'ivu-select-visible':selectCityStatus}" @click.stop="openSelectCity" v-clickoutside="handleCityClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
-      <div class="ivu-select-selection">
-        <span class="ivu-select-placeholder" v-show="!city">请选择</span>
-        <span class="ivu-select-selected-value" v-show="city">{{city}}</span>
-        <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
-        <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
-      </div>
-      <div class="ivu-select-dropdown" v-show="selectCityStatus" :style="styles">
-        <ul class="ivu-select-dropdown-list">
-          <li v-for="item in cityList" class="ivu-select-item" :class="{'ivu-select-item-selected':city==item.name}" @click="selectCity(item.name)">{{item.name}}
-          </li>
-        </ul>
-      </div>
-    </div>
+        <!--市级-->
+        <div class="ivu-select ivu-select-single" v-if="level>1" :class="{'ivu-select-visible':selectCityStatus}" @click.stop="openSelectCity" v-clickoutside="handleCityClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
+            <div class="ivu-select-selection">
+                <span class="ivu-select-placeholder" v-show="!value.city">请选择</span>
+                <span class="ivu-select-selected-value" v-show="value.city">{{value.city}}</span>
+                <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
+                <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
+            </div>
+            <div class="ivu-select-dropdown" v-show="selectCityStatus" :style="styles">
+                <ul class="ivu-select-dropdown-list">
+                    <li v-for="item in cityList" class="ivu-select-item" :class="{'ivu-select-item-selected':value.city==item.name}" @click="selectCity(item.name)">{{item.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    <!--地级-->
-    <div class="ivu-select ivu-select-single" v-if="level>2" :class="{'ivu-select-visible':selectDistrictStatus}" @click.stop="openSelectDistrict" v-clickoutside="handleDistrictClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
-      <div class="ivu-select-selection">
-        <span class="ivu-select-placeholder" v-show="!district">请选择</span>
-        <span class="ivu-select-selected-value" v-show="district">{{district}}</span>
-        <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
-        <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
-      </div>
-      <div class="ivu-select-dropdown" v-show="selectDistrictStatus" :style="styles">
-        <ul class="ivu-select-dropdown-list">
-          <li v-for="item in districtList" class="ivu-select-item" :class="{'ivu-select-item-selected':district==item}" @click="selectDistrict(item)">{{item}}
-          </li>
-        </ul>
-      </div>
+        <!--地级-->
+        <div class="ivu-select ivu-select-single" v-if="level>2" :class="{'ivu-select-visible':selectDistrictStatus}" @click.stop="openSelectDistrict" v-clickoutside="handleDistrictClose" :style="{width:level==1?'100%':(level==2?'48%':(level==3?'33%':'100%'))}">
+            <div class="ivu-select-selection">
+                <span class="ivu-select-placeholder" v-show="!value.district">请选择</span>
+                <span class="ivu-select-selected-value" v-show="value.district">{{value.district}}</span>
+                <i class="ivu-icon ivu-icon-ios-close ivu-select-arrow" style="display: none;"></i>
+                <i class="ivu-icon ivu-icon-arrow-down-b ivu-select-arrow"></i>
+            </div>
+            <div class="ivu-select-dropdown" v-show="selectDistrictStatus" :style="styles">
+                <ul class="ivu-select-dropdown-list">
+                    <li v-for="item in districtList" class="ivu-select-item" :class="{'ivu-select-item-selected':value.district==item}" @click="selectDistrict(item)">{{item}}
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -87,9 +87,9 @@
       return {
         model1: '',
         lib: this.library(),
-        province: (this.location.province?this.location.province:'')||(this.value.province?this.value.province:''),
-        city: (this.location.city?this.location.city:'')||(this.value.city?this.value.city:''),
-        district: (this.location.district?this.location.district:'')||(this.value.district?this.value.district:''),
+        province: this.value.province?this.value.province:'',
+        city: this.value.city?this.value.city:'',
+        district: this.value.district?this.value.district:'',
         selectProvinceStatus: false,
         selectCityStatus: false,
         selectDistrictStatus: false,
@@ -107,7 +107,7 @@
       },
       //计算出来市级即二级的列表
       cityList: function() {
-        const thisProvince = this.province
+        const thisProvince = this.value.province
         let thisArr = this.lib.filter(function(index) {
           return index.name == thisProvince
         })
@@ -115,7 +115,7 @@
       },
       //计算出来县级即三级的列表
       districtList: function() {
-        const thisCity = this.city;
+        const thisCity = this.value.city;
         let thisArr = this.cityList.filter(function(index) {
           return index.name == thisCity
         })
@@ -129,16 +129,16 @@
      */
     props: {
       value:{
-        default:Object
+        type:Object
       },
       level: {
-        default: ""
+        type: Number
       },
       type: {
-        default: Number
+        type: Array
       },
       location:{
-        default:Object
+        type:Object
       }
     },
 
@@ -148,7 +148,6 @@
     },
     created() {
     },
-
     methods: {
       /**
        * @desc 库文件
@@ -185,31 +184,31 @@
        * @desc 选择省份
        * */
       selectProvince(_province) {
-        this.province = _province
-        this.city = '';
-        this.district = ''
+        this.value.province = _province
+        this.value.city = '';
+        this.value.district = ''
         if (this.level == 1) {
           this.$emit('on-change', {
-            province: this.province,
+            province: this.value.province,
 
           })
         } else if (this.level == 2) {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
+            province: this.value.province,
+            city: this.value.city,
 
           })
         } else if (this.level == 3) {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
-            district: this.district
+            province: this.value.province,
+            city: this.value.city,
+            district: this.value.district
           })
         } else {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
-            district: this.district
+            province: this.value.province,
+            city: this.value.city,
+            district: this.value.district
           })
         }
       },
@@ -218,25 +217,25 @@
        * @desc 选择市级
        * */
       selectCity(_city) {
-        this.city = _city
-        this.district = ''
+        this.value.city = _city
+        this.value.district = ''
         if (this.level == 2) {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
+            province: this.value.province,
+            city: this.value.city,
 
           })
         } else if (this.level == 3) {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
-            district: this.district
+            province: this.value.province,
+            city: this.value.city,
+            district: this.value.district
           })
         } else {
           this.$emit('on-change', {
-            province: this.province,
-            city: this.city,
-            district: this.district
+            province: this.value.province,
+            city: this.value.city,
+            district: this.value.district
           })
         }
 
@@ -245,12 +244,12 @@
        * @desc 选择县级
        * */
       selectDistrict(_district) {
-        this.district = _district
+        this.value.district = _district
 
         this.$emit('on-change', {
-          province: this.province,
-          city: this.city,
-          district: this.district
+          province: this.value.province,
+          city: this.value.city,
+          district: this.value.district
         })
 
       },
@@ -317,12 +316,11 @@
       }
       this.screenWidth = document.getElementsByClassName('ivu-select')[0].clientWidth;
 
-    },
-
+    }
   }
 </script>
 
 <style lang="scss" scoped>
-  .address-picker {}
+    .address-picker {}
 </style>
 
