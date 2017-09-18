@@ -2,7 +2,8 @@
 - 多功能自定义拓展地址库，支持 数组type 不同类型的三级联库
 - 强依赖iview 
 ## BUG 
-在iview modal tabs 中出现显示异常
+在iview modal tabs 中出现显示异常  -2017-9-18 fiex 
+不要使用 vue-multi-address-Error.vue 准备剥离 iveiw 支持的文件，don't use it！！！！
 ## Tips非常重要
 - 这个项目强依赖 于 https://github.com/iview/iview ，不然css 会Boooooooom啊
 - 参考类型项目  https://github.com/G-Veigar/vue-address-picker
