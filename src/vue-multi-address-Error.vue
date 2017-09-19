@@ -1,14 +1,7 @@
 <!------------------------
  *@name Vue.js
- *@author Jo.gel
+ *@author veaba
  *@date 2017/9/18
-*@desc 基于iview ui 多功能级联select 地址插件
-*@desc 参考项目1 https://github.com/iview/iview
-*@desc 参考项目2 https://github.com/G-Veigar/vue-address-picker
-*@desc 参考项目3 https://github.com/ant-design/ant-design
-*@desc 依赖clickoutside
-* level  支持三级 1 2 3、默认3级，props输入
-* type  {array} props 传入数组、默认 address ，支持额外的库，如unit，库由开发者额外提供
 -->
 <style scoped lang="scss">
     .address-picker {

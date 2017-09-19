@@ -1,6 +1,6 @@
 <!------------------------
  *@name Vue.js
- *@author Jo.gel
+ *@author veaba
  *@date 2017/9/18
  *@desc level 1/2/3 => 省/市/县
  *@desc type [unit,address] 增加unit进来，目前只支持添加两类

@@ -1,33 +1,37 @@
 <!--
+@author veaba
+@time 2017-9-18
 @desc filterable 开始搜索模式 {Boolean}
 @desc transfer 开启  body 调整 {Boolean}
 -->
 <style>
-    .address-picker{
-        display:flex;
-        flex:1
+    .address-picker {
+        display: flex;
+        flex: 1
     }
-    .ivu-select-selection{
-        margin:0 5px;
+
+    .ivu-select-selection {
+        margin: 0 5px;
     }
 </style>
+
 <template>
     <div class='address-picker'>
-        <Select @on-change="provinceEvent" v-model="value.province" :filterable="filterable"  :transfer="transfer?transfer:false">
+        <Select @on-change="provinceEvent" v-model="value.province" :filterable="filterable" :transfer="transfer?transfer:false">
             <Option v-for="item in lib" :value="item.name" :key="item.name"></Option>
         </Select>
-        <Select @on-change="cityEvent" v-if="level>1||!level" v-model="value.city" :filterable="filterable"  :transfer="transfer?transfer:false">
+        <Select @on-change="cityEvent" v-if="level>1||!level" v-model="value.city" :filterable="filterable" :transfer="transfer?transfer:false">
             <Option v-for="item in cityList" :value="item.name" :key="item.name"></Option>
         </Select>
-        <Select @on-change="districtEvent" v-if="level>2||!level" v-model="value.district" :filterable="filterable"  :transfer="transfer?transfer:false">
+        <Select @on-change="districtEvent" v-if="level>2||!level" v-model="value.district" :filterable="filterable" :transfer="transfer?transfer:false">
             <Option v-for="item in districtList" :value="item" :key="item"></Option>
         </Select>
     </div>
 </template>
 
 <script>
-  const addressJson = require('./address.js')
-  const unitJson = require('./unit-json.js')
+  const addressJson = require('./address.js') //地址库
+  const unitJson = require('./unit-json.js') //unit 单位库
   const allJson = [] //全部库的组合
   export default {
     name: 'addressPicker',
@@ -56,14 +60,16 @@
     data() {
       return {
         lib: this.library(),
-
+        province: this.value.province?this.value.province:'',
+        city: this.value.city?this.value.city:'',
+        district: this.value.district?this.value.district:''
       }
     },
 
     computed: {
       //计算出来市级即二级的列表
       cityList: function() {
-        const thisProvince = this.value.province
+        const thisProvince = this.province
         let thisArr = this.lib.filter(function(index) {
           return index.name == thisProvince
         })
@@ -71,7 +77,7 @@
       },
       //计算出来县级即三级的列表
       districtList: function() {
-        const thisCity = this.value.city;
+        const thisCity = this.city;
         let thisArr = this.cityList.filter(function(index) {
           return index.name == thisCity
         })
@@ -79,13 +85,10 @@
       },
     },
 
-
-    created() {},
-
-    watch: {
-
-    },
     methods: {
+      /**
+       *@desc 渲染省份
+       */
       library: function() {
         //1、判断type 字段
         if (this.type) {
@@ -122,56 +125,61 @@
        *@desc 省份事件
        */
       provinceEvent(value) {
+        this.province = value
+        this.city = ''
+        this.district = ''
         if (this.level == 1) {
           this.$emit('on-change', {
-            province: this.value.province,
+            province: this.province,
           })
         } else if (this.level == 2) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
+            province: this.province,
+            city: this.city,
           })
         } else if (this.level == 3) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         } else {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         }
+
       },
       /**
        *@desc 城市事件
        */
       cityEvent(value) {
-
+        this.city = value
+        this.district = ''
         if (this.level == 1) {
           this.$emit('on-change', {
-            province: this.value.province,
+            province: this.province,
 
           })
         } else if (this.level == 2) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
+            province: this.province,
+            city: this.city,
 
           })
         } else if (this.level == 3) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         } else {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         }
       },
@@ -179,28 +187,29 @@
       /**区县事件
        */
       districtEvent(value) {
+        this.district = value
         if (this.level == 1) {
           this.$emit('on-change', {
-            province: this.value.province,
+            province: this.province,
 
           })
         } else if (this.level == 2) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
+            province: this.province,
+            city: this.city,
 
           })
         } else if (this.level == 3) {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         } else {
           this.$emit('on-change', {
-            province: this.value.province,
-            city: this.value.city,
-            district: this.value.district
+            province: this.province,
+            city: this.city,
+            district: this.district
           })
         }
       }
@@ -208,8 +217,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
-
