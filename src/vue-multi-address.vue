@@ -41,6 +41,9 @@
      * @desc type 引入的库数组 [unit,address]
      */
     props: {
+      type:{
+        type:Array
+      },
       value: {
         type: Object
       },
