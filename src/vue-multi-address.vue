@@ -32,7 +32,7 @@
 <script>
   const addressJson = require('./address.js') //地址库
   const unitJson = require('./unit-json.js') //unit 单位库
-  const allJson = [] //全部库的组合
+  let allJson = [] //全部库的组合
   export default {
     name: 'addressPicker',
     directives: {},
@@ -95,6 +95,7 @@
       library: function() {
         //1、判断type 字段
         if (this.type) {
+          allJson=[]//需要置空导出数组，否则重绘多次会导致组件数据多次加载省份数据
           //2、存在且返回index 、否则返回 -1 indexOf 和IE有兼容性问题
           let unitString = this.type.indexOf('unit');
           let addressString = this.type.indexOf('address');
