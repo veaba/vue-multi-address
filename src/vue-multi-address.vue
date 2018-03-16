@@ -31,8 +31,8 @@
 </template>
 
 <script>
-const addressJson = require('./address.js'); //地址库
-const unitJson = require('./unit-json.js'); //unit 单位库
+const addressJson = require('..lib/address.js'); //地址库
+const unitJson = require('../lib/unit-json.js'); //unit 单位库
 let allJson = []; //全部库的组合
 export default {
   name: 'addressPicker',
