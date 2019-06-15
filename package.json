@@ -1,0 +1,25 @@
+{
+  "name": "vue-multi-address",
+  "version": "1.0.0",
+  "description": "A Multifunctional Address Plug-in Strongly Dependent on iView UI Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/veaba/vue-multi-address.git"
+  },
+  "keywords": [
+    "vue-multi-address",
+    "china",
+    "province",
+    "address"
+  ],
+  "author": "veaba",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/veaba/vue-multi-address/issues"
+  },
+  "homepage": "https://github.com/veaba/vue-multi-address#readme"
+}
