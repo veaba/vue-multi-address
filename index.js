@@ -3,8 +3,9 @@
  *@author veaba https://github.com/veaba
  *@date 2017/9/15
  ***********************/
-var vueMultiAddress  = require('./src/vue-address-picker.vue');
+import vueMultiAddress from './src/vue-multi-address.vue'
 
-module.exports = function install (Vue) {
+const install =function install (Vue) {
   Vue.component(vueMultiAddress.name, vueMultiAddress)
 }
+export default install
