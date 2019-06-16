@@ -8,7 +8,7 @@
 <style>
 .address-picker {
   display: flex;
-  flex: 1
+  flex: 1;
 }
 
 .ivu-select-selection {
@@ -17,25 +17,42 @@
 </style>
 
 <template>
-<div class='address-picker'>
-  <Select @on-change="provinceEvent" v-model="value.province" :filterable="filterable" :transfer="transfer?transfer:false">
-    <Option v-for="item in lib" :value="item.name" :key="item.name"></Option>
-  </Select>
-  <Select @on-change="cityEvent" v-if="level>1||!level" v-model="value.city" :filterable="filterable" :transfer="transfer?transfer:false">
-    <Option v-for="item in cityList" :value="item.name" :key="item.name"></Option>
-  </Select>
-  <Select @on-change="districtEvent" v-if="level>2||!level" v-model="value.district" :filterable="filterable" :transfer="transfer?transfer:false">
-    <Option v-for="item in districtList" :value="item" :key="item"></Option>
-  </Select>
-</div>
+  <div class="address-picker">
+    <Select
+      @on-change="provinceEvent"
+      v-model="value.province"
+      :filterable="filterable"
+      :transfer="transfer?transfer:false"
+    >
+      <Option v-for="(item,index) in lib" :value="item.name" :key="index">{{item.name}}</Option>
+    </Select>
+    <Select
+      @on-change="cityEvent"
+      v-if="level>1||!level"
+      v-model="value.city"
+      :filterable="filterable"
+      :transfer="transfer?transfer:false"
+    >
+      <Option v-for="(item,index) in cityList" :value="item.name" :key="index">{{item.name}}</Option>
+    </Select>
+    <Select
+      @on-change="districtEvent"
+      v-if="level>2||!level"
+      v-model="value.district"
+      :filterable="filterable"
+      :transfer="transfer?transfer:false"
+    >
+      <Option v-for="(item,index) in districtList" :value="item" :key="index">{{item}}</Option>
+    </Select>
+  </div>
 </template>
 
 <script>
-import addressJson from './lib/address.js'; //地址库
-import unitJson from './lib/unit-json.js'; //unit 单位库
+import addressJson from "./lib/address.js"; //地址库
+import unitJson from "./lib/unit-json.js"; //unit 单位库
 let allJson = []; //全部库的组合
 export default {
-  name: 'addressPicker',
+  name: "addressPicker",
   directives: {},
   /**
    * @desc level 1/2/3 => 省/市/县
@@ -64,10 +81,10 @@ export default {
   data() {
     return {
       lib: this.library(),
-      province: this.value.province?this.value.province:'',
-      city: this.value.city?this.value.city:'',
-      district: this.value.district?this.value.district:''
-    }
+      province: this.value.province ? this.value.province : "",
+      city: this.value.city ? this.value.city : "",
+      district: this.value.district ? this.value.district : ""
+    };
   },
 
   computed: {
@@ -75,18 +92,18 @@ export default {
     cityList: function() {
       const thisProvince = this.province;
       let thisArr = this.lib.filter(function(index) {
-        return index.name === thisProvince
+        return index.name === thisProvince;
       });
-      return thisArr[0] ? thisArr[0].city : []
+      return thisArr[0] ? thisArr[0].city : [];
     },
     //计算出来县级即三级的列表
     districtList: function() {
       const thisCity = this.city;
       let thisArr = this.cityList.filter(function(index) {
-        return index.name === thisCity
+        return index.name === thisCity;
       });
-      return thisArr[0] ? thisArr[0].area : []
-    },
+      return thisArr[0] ? thisArr[0].area : [];
+    }
   },
 
   methods: {
@@ -96,35 +113,34 @@ export default {
     library: function() {
       //1、判断type 字段
       if (this.type) {
-        allJson=[];//需要置空导出数组，否则重绘多次会导致组件数据多次加载省份数据
+        allJson = []; //需要置空导出数组，否则重绘多次会导致组件数据多次加载省份数据
         //2、存在且返回index 、否则返回 -1 indexOf 和IE有兼容性问题
-        let unitString = this.type.indexOf('unit');
-        let addressString = this.type.indexOf('address');
+        let unitString = this.type.indexOf("unit");
+        let addressString = this.type.indexOf("address");
         //3、如果存在，则找他们的库，并结合起来
         if (unitString > -1) {
           if (unitJson.length > 0) {
             //找到unit 库
-            allJson.splice(allJson.length, 0, ...unitJson)
+            allJson.splice(allJson.length, 0, ...unitJson);
           } else {
             //没找到unit 库
-            console.error('unit库为空或不存在，请添加库文件')
+            console.error("unit库为空或不存在，请添加库文件");
           }
         }
         if (addressString > -1 || (unitString === -1 && addressString === -1)) {
           if (addressJson.length > 0) {
             //找到unit库
-            allJson.splice(allJson.length, 0, ...addressJson)
+            allJson.splice(allJson.length, 0, ...addressJson);
           } else {
             //没找到address 库
-            console.error('address库为空或不存在，请添加库文件')
+            console.error("address库为空或不存在，请添加库文件");
           }
         }
-      }
-      else {
+      } else {
         //默认无typeporps 则会调用address 库
-        return addressJson
+        return addressJson;
       }
-      return allJson
+      return allJson;
     },
 
     /**
@@ -132,61 +148,58 @@ export default {
      */
     provinceEvent(value) {
       this.province = value;
-      this.city = '';
-      this.district = '';
+      this.city = "";
+      this.district = "";
       if (this.level === 1) {
-        this.$emit('on-change', {
-          province: this.province,
-        })
+        this.$emit("on-change", {
+          province: this.province
+        });
       } else if (this.level === 2) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
-          city: this.city,
-        })
+          city: this.city
+        });
       } else if (this.level === 3) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       } else {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       }
-
     },
     /**
      *@desc 城市事件
      */
     cityEvent(value) {
       this.city = value;
-      this.district = '';
+      this.district = "";
       if (this.level === 1) {
-        this.$emit('on-change', {
-          province: this.province,
-
-        })
+        this.$emit("on-change", {
+          province: this.province
+        });
       } else if (this.level === 2) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
-          city: this.city,
-
-        })
+          city: this.city
+        });
       } else if (this.level === 3) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       } else {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       }
     },
 
@@ -195,31 +208,28 @@ export default {
     districtEvent(value) {
       this.district = value;
       if (this.level === 1) {
-        this.$emit('on-change', {
-          province: this.province,
-
-        })
+        this.$emit("on-change", {
+          province: this.province
+        });
       } else if (this.level === 2) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
-          city: this.city,
-
-        })
+          city: this.city
+        });
       } else if (this.level === 3) {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       } else {
-        this.$emit('on-change', {
+        this.$emit("on-change", {
           province: this.province,
           city: this.city,
           district: this.district
-        })
+        });
       }
     }
-
   }
-}
+};
 </script>
