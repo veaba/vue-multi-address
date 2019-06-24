@@ -87,6 +87,13 @@ export default {
     };
   },
 
+  watch:{
+    value(obj){
+      if (obj.province) this.province=obj.province
+      if (obj.city) this.city=obj.city
+      if (obj.district) this.district=obj.district
+    }
+  },
   computed: {
     //计算出来市级即二级的列表
     cityList: function() {
