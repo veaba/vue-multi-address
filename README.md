@@ -1,41 +1,38 @@
 # vue-multi-address
 - 多功能自定义拓展地址库，支持 数组type 不同类型的三级联库
 - 强依赖iview 
+
 ## BUG 
-在iview modal tabs 中出现显示异常  -2017-9-18 fiex 
-当重置prop 是，无法联动data的值变化 -2019年6月24日20:10:46 fix
+- 在iview modal tabs 中出现显示异常  -2017-9-18 fiex 
+- 当重置prop 是，无法联动data的值变化 -2019年6月24日20:10:46 fix
+- 移除亢余代码 —— 2019年6月25日23:28:29
+- 补全省份全称 —— 2019年6月25日23:33:11
+
 ## Tips非常重要
 - 这个项目强依赖 于 https://github.com/iview/iview ，不然css 会Boooooooom啊
 - 参考类型项目  https://github.com/G-Veigar/vue-address-picker
 
 ## install
 ```npm
-还没制作npm包
+npm install --save vue-multi-address
 ```
 
+## 父组件中
+
+
 ```js
-data: function() {
-      return {
-        location: {
-          province: "浙江",
-          city: "",
-          district: ""
-        }
-      }
-    }
+<template>
+  <address-picker v-model="location" :level="3" :type='["unit","address"]' @on-change="getChangeValue"></address-picker>
+</template>
+
 ```
-## component被引用
-```vue
-<address-picker v-model="location" :level="3" :type='["unit","address"]' @on-change="getChangeValue"></address-picker>
-```
-## event 子组件返回值 
+## event 子组件返回值 地区的对象 {province,city,district}
 
 - @on-change return{Object}
 ```js
 
 methods:{
-  getChangeValue(location) 
-  {
+  getChangeValue(location)  {
     console.info(location);
   }
 }
@@ -58,7 +55,7 @@ methods:{
 	目前只支持 两个类型库，需要的话，自己在源码里面增加以适应不同的场合
 	如果空数组则default : address
 ```
-- value {Object}(双向绑定)
+- value {Object} (双向绑定)
 支持value 传入默认值
 ```vue
 	<address-picker :value="location" :level="3" :type='["unit","address"]' @on-change="getChangeValue" ></address-picker>
@@ -66,8 +63,7 @@ methods:{
 ```
 此时 在js 里面这样赋予默认值
 ```js
-data()
-	{
+data(){
       return {
         location: {
           province: "浙江",

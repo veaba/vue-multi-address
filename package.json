@@ -1,6 +1,6 @@
 {
   "name": "vue-multi-address",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Multifunctional Address Plug-in Strongly Dependent on iView UI Library",
   "main": "index.js",
   "scripts": {
