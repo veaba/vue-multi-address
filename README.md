@@ -13,8 +13,12 @@
 - 参考类型项目  https://github.com/G-Veigar/vue-address-picker
 
 ## install
-```npm
-npm install --save vue-multi-address
+
+~~`npm install --save vue-multi-address`~~
+
+```shell
+临时使用
+npm install --save @china5a/vue-multi-address
 ```
 
 ## 父组件中
